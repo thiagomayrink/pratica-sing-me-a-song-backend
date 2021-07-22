@@ -5,7 +5,7 @@ export class AddSongController {
     
     async handle(req: Request, res: Response): Promise<Response>{
         const { name, youtubeLink } = req.body;
-        if (!name && !youtubeLink){
+        if (!name || !youtubeLink){
             return res.sendStatus(400);
         }
         const addnewSongService = new AddSongService();
@@ -21,8 +21,7 @@ export class AddSongController {
                 return res.status(status).send(message);
             }
             if (status === 400){
-                message = "invalid request"
-                return res.status(status).send(message);
+                return res.sendStatus(400);
             }
             if (status === 409){
                 message = "Song already exists!"

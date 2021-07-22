@@ -41,18 +41,30 @@ describe("POST /recommendations", () => {
 
     const response = await agent.post("/recommendations").send(song);
 
-    expect(response.text).toEqual(expect.any(String));
+    expect(response.text).toEqual("Song already exists!");
     expect(response.status).toEqual(409);
   });
 
-  it("should answer with text \"error message!\" and status 400 for invalid parameters", async () => {
+  it("should answer with text \"Bad Request\" and status 400 for invalid video name", async () => {
     const song = {
         name: "",
-        youtubeLink:""
+        youtubeLink:"https://youtube.com/watch?v=y5RNbKh9ZRQ"
+    }
+
+    const response = await agent.post("/recommendations").send(song);
+    expect(response.text).toEqual("Bad Request");
+    expect(response.status).toEqual(400);
+  });
+
+  it("should answer with text \"Bad Request\" and status 400 for invalid youtube link", async () => {
+    const song = {
+        name: "valid_vídeo_name",
+        youtubeLink:"invalid_youtube_link"
     }
 
     const response = await agent.post("/recommendations").send(song);
 
+    expect(response.text).toEqual("Bad Request");
     expect(response.status).toEqual(400);
   });
 });
