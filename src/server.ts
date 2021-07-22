@@ -1,4 +1,4 @@
-import "../src/setup.js";
+import "./setup";
 import { app } from "./app";
 
 const port = process.env.PORT

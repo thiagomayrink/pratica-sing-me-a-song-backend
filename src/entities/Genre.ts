@@ -1,9 +1,10 @@
 export class Genre {
-    public readonly id: string;
+    public readonly id: number;
 
     public name: string;
-    public readonly score: number;
-    constructor (props: Omit<Genre, "id">, id?: string){
+    public score: number;
+
+    constructor (props: Omit<Genre, "id">, id?: number){
         Object.assign(this, props);
     }
 }

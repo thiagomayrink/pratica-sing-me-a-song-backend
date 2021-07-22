@@ -1,5 +1,6 @@
 export interface IAddSongServiceDTO { 
     name: string;
     youtubeLink: string;
-    score?:number
+    score?:number;
+    genres?:number[];
 }

@@ -1,10 +1,9 @@
 import { Router } from "express";
+import { AddSongController } from "./controllers/AddSongController";
 
 const router = Router();
+const addSongController = new AddSongController();
 
-router.get("/test", (req, res) => {
-    res.send("OK!");
-});
-
+router.post("/recommendations",  addSongController.handle);
 
 export { router };
