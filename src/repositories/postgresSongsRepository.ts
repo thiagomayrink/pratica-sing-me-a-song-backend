@@ -1,8 +1,8 @@
-import { songsRepository } from "./songsRepository";
+import { ISongsRepository } from "./ISongsRepository";
 import { connection } from "../database";
 import { Song } from "../entities/Song";
 
-export class postgresSongsRepository implements songsRepository {
+export class postgresSongsRepository implements ISongsRepository {
 
     async findByYoutubeLink(youtubeLink: string): Promise<Song[]>{
         const { rows:songs } = await connection.query(`

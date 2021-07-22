@@ -1,12 +1,12 @@
 import { Song } from "../entities/Song";
-import { songsRepository } from "../repositories/songsRepository";
-import { addSongServiceDTO } from "./addSongServiceDTO";
+import { ISongsRepository } from "../repositories/ISongsRepository";
+import { IAddSongServiceDTO } from "./IAddSongServiceDTO";
 
 export class addSongService {
     constructor(
-        private songsRepository: songsRepository
+        private songsRepository: ISongsRepository
     ){}
-    async execute(data: addSongServiceDTO) {
+    async execute(data: IAddSongServiceDTO) {
         const songAlreadyExists = await this.songsRepository.findByYoutubeLink(data.youtubeLink);
 
         if (songAlreadyExists){
