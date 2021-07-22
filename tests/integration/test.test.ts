@@ -1,5 +1,5 @@
 import supertest from "supertest";
-import app from "../../src/app";
+import { app } from "../../src/app";
 
 describe("GET /test", () => {
   it("should answer with text \"OK!\" and status 200", async () => {
