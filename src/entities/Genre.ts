@@ -3,7 +3,7 @@ export class Genre {
 
     public name: string;
     public readonly score: number;
-    constructor (props: Omit<Genre, "id"|"score">, id?: number, score?: number){
+    constructor (props: Omit<Genre, "id">, id?: string){
         Object.assign(this, props);
     }
 }

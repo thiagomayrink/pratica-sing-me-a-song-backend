@@ -14,8 +14,8 @@ export class addSongService {
         }
 
         const song = new Song(data);
-        
-        await this.songsRepository.save(song);
+
+        await this.songsRepository.insert(song);
     }
 }
 

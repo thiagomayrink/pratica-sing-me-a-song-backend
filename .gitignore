@@ -1,3 +1,5 @@
-/dist
-/node_modules
-/db_model
+dist/
+node_modules/
+db_model/
+.env
+.env.test
