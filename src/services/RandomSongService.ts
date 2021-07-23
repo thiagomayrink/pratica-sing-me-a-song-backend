@@ -1,21 +1,11 @@
 import { Song } from "../entities/Song";
 import { PostgresSongsRepository } from "../repositories/PostgresSongsRepository";
+import { pickRandomSong, randomInteger } from "../utils/utils";
 
 export class RandomSongService {
     
     async execute(): Promise<{status:number, randomSong:Song|""}> {
         const songsRepository = new PostgresSongsRepository;
-
-        function randomInteger(min:number, max:number): number { 
-            return Math.floor(Math.random() * (max - min) + min);
-        }
-
-        function pickRandomSong(songArray:Song[]): Song {
-            const minValue:number = 0;
-            const maxValue:number = songArray.length;
-            const randomIndex = randomInteger(minValue,maxValue);
-            return songArray[randomIndex];
-        }
 
         try{
             let status:number;

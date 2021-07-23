@@ -1,14 +1,8 @@
 import { Song } from "../entities/Song";
 import { IAddSongServiceDTO } from "./IAddSongServiceDTO";
 import { PostgresSongsRepository } from "../repositories/PostgresSongsRepository";
-import fetch from "node-fetch";
+import { isvalidYoutubeVideoId } from "../utils/utils";
 
-async function isvalidVideoId(id: string) {
-    const url = `http://img.youtube.com/vi/${id}/mqdefault.jpg`;
-    const { status } = await fetch(url);
-    if (status === 404) return false;
-    return true;
-};
 
 export class AddSongService {
     
@@ -17,7 +11,7 @@ export class AddSongService {
             let status:number;
 
             const videoId:string = data.youtubeLink?.split("v=")[1]?.substring(0, 11);
-            if(!await isvalidVideoId(videoId)){
+            if(!await isvalidYoutubeVideoId(videoId)){
                 status = 400;
                 return status;
             };

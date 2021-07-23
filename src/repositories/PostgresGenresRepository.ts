@@ -29,5 +29,12 @@ export class PostgresGenresRepository implements IGenresRepository {
             [name]
         );
     };
+    async getAll(): Promise<Genre[]|null>{
+        const { rows:genres } = await connection.query(`
+            SELECT * FROM genres`
+        );
+
+        return genres || null;
+    }
 };
 

@@ -1,13 +1,13 @@
 import express from "express";
 import cors from "cors";
-import { router } from "./routes";
+import genreRouter from "./routers/genreRouter";
+import recommendationRouter from "./routers/recommendationRouter";
 
 const app = express();
-
 app.use(cors());
-
 app.use(express.json());
 
-app.use(router);
+app.use("/genres", genreRouter);
+app.use("/recommendations", recommendationRouter);
 
 export { app };

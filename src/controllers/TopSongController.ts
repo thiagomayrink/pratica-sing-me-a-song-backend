@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import { Song } from "../entities/Song";
 import { TopSongService } from "../services/TopSongService";
 
 export class TopSongController {
