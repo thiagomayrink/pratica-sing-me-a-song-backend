@@ -1,15 +1,15 @@
 import "../../src/setup";
 import supertest from "supertest";
 import { app } from "../../src/app";
-import {connection} from "../../src/database";
-import {createAndReturnSong, fetchSongById} from "../integration/utils/utils";
+import {  fetchSongById, endConnection, clearSongs  } from "../utils/utils";
+import { createAndReturnSong, populateSongsTable } from "../factories/songFactory";
 
 beforeEach(async () => {
-  await connection.query('DELETE FROM songs');
+  await clearSongs();
 });
 
 afterAll(async () => {
-  await connection.end();
+  await endConnection();
 });
 
 const agent = supertest(app);
@@ -125,5 +125,29 @@ describe("POST /recommendations/:id/:voteType", () => {
     expect(response.text).toBe("Invalid Song id!");
     expect(response.status).toBe(404);
   });
+});
 
+describe("GET /recommendations/random", () => {
+  it("should answer with status 200 and a random song", async () => {
+    await populateSongsTable();
+    const response = await agent.get(`/recommendations/random`);
+    
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual(
+      expect.objectContaining(
+        {
+          id: expect.any(Number),
+          name: expect.any(String),
+          youtubeLink: expect.any(String),
+          score: expect.any(Number)
+        }
+      )
+    );
+  });
+
+  it("should answer with status 404 for empty songs table", async () => {
+    const response = await agent.get(`/recommendations/random`);
+    
+    expect(response.status).toBe(404);
+  });
 });

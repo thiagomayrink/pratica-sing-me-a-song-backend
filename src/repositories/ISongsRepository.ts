@@ -7,4 +7,6 @@ export interface ISongsRepository {
     delete(id: number ): Promise<void>;
     upVote(id: number): Promise<void>;
     downVote(id: number): Promise<Song[]>;
+    fetchAboveScore10():Promise<Song[]>;
+    fetchBelowScore10():Promise<Song[]>;
 }

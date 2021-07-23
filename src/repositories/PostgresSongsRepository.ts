@@ -57,5 +57,21 @@ export class PostgresSongsRepository implements ISongsRepository {
         );
         return result.rows || null; 
     };
+
+    async fetchAboveScore10(): Promise<Song[]> {
+        const { rows } = await connection.query(`
+            SELECT * FROM songs WHERE "score" > 10
+        `);
+        
+        return rows || null;
+    }
+
+    async fetchBelowScore10(): Promise<Song[]> {
+        const { rows } = await connection.query(`
+            SELECT * FROM songs WHERE "score" <= 10
+        `);
+
+        return rows || null;
+    }
 };
 
