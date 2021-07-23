@@ -5,13 +5,14 @@ export class AddSongController {
     
     async handle(req: Request, res: Response): Promise<Response>{
         const { name, youtubeLink } = req.body;
+        
         if (!name || !youtubeLink){
             return res.sendStatus(400);
         }
-        const addnewSongService = new AddSongService();
+        const addSongService = new AddSongService();
         let message:string;
         try{
-            const status = await addnewSongService.execute({
+            const status = await addSongService.execute({
                 name,
                 youtubeLink
             });

@@ -8,7 +8,7 @@ async function isvalidVideoId(id: string) {
     const { status } = await fetch(url);
     if (status === 404) return false;
     return true;
-}
+};
 
 export class AddSongService {
     
@@ -38,7 +38,7 @@ export class AddSongService {
             return status;
         }catch (err){
             console.log(err);
-        }
-    }
-}
+        };
+    };
+};
 

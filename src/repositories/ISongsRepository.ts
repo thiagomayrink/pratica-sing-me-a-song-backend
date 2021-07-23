@@ -2,7 +2,9 @@ import { Song } from "../entities/Song";
 
 export interface ISongsRepository {
     findByYoutubeLink(youtubeLink: string ): Promise<Song[]>;
+    findById(id: number ): Promise<Song[]>;
     save(song: Song): Promise<void>;
-    upVote(song: Song): Promise<void>;
-    downVote(song: Song): Promise<Song[]>;
+    delete(id: number ): Promise<void>;
+    upVote(id: number): Promise<void>;
+    downVote(id: number): Promise<Song[]>;
 }
