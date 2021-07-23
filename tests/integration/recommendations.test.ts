@@ -151,3 +151,37 @@ describe("GET /recommendations/random", () => {
     expect(response.status).toBe(404);
   });
 });
+
+describe("GET /recommendations/top/:amount", () => {
+  it("should answer with status 200 and an array with the top ''amount'' songs", async () => {
+    await populateSongsTable();
+    const amount = 10;
+
+    const response = await agent.get(`/recommendations/top/${amount}`);
+    
+    expect(response.status).toBe(200);
+    expect(response.body.length).toBe(amount);
+    expect(response.body).toEqual(
+      expect.arrayContaining(
+        [
+          expect.objectContaining(
+            {
+              id: expect.any(Number),
+              name: expect.any(String),
+              youtubeLink: expect.any(String),
+              score: expect.any(Number)
+            }
+          )
+        ]
+      )
+    );
+  });
+
+  it("should answer with status 200 and an empty array if songs table is empty", async () => {
+    const amount = 10;
+    const response = await agent.get(`/recommendations/top/${amount}`);
+    
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual(expect.arrayContaining([]));
+  });
+});

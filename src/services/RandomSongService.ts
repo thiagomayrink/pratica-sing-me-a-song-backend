@@ -3,14 +3,14 @@ import { PostgresSongsRepository } from "../repositories/PostgresSongsRepository
 
 export class RandomSongService {
     
-    async execute() {
+    async execute(): Promise<{status:number, randomSong:Song|""}> {
         const songsRepository = new PostgresSongsRepository;
 
-        function randomInteger(min:number, max:number) { 
+        function randomInteger(min:number, max:number): number { 
             return Math.floor(Math.random() * (max - min) + min);
         }
 
-        function pickRandomSong(songArray:Song[]) {
+        function pickRandomSong(songArray:Song[]): Song {
             const minValue:number = 0;
             const maxValue:number = songArray.length;
             const randomIndex = randomInteger(minValue,maxValue);
@@ -22,7 +22,7 @@ export class RandomSongService {
 
             const songsAboveScore10 = await songsRepository.fetchAboveScore10();
             const songsBelowScore10 = await songsRepository.fetchBelowScore10();
-            let randomSong;
+            let randomSong:Song|"";
 
             if ((songsAboveScore10.length === 0) && (songsBelowScore10.length === 0)){
                 status = 404;

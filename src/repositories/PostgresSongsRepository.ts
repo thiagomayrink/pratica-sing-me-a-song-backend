@@ -4,7 +4,7 @@ import { Song } from "../entities/Song";
 
 export class PostgresSongsRepository implements ISongsRepository {
 
-    async findByYoutubeLink(youtubeLink: string): Promise<Song[]>{
+    async findByYoutubeLink(youtubeLink: string): Promise<Song[]|null>{
         const { rows:songs } = await connection.query(`
             SELECT * FROM songs WHERE "youtubeLink" = ($1)
         `,[youtubeLink]);
@@ -12,9 +12,9 @@ export class PostgresSongsRepository implements ISongsRepository {
         return songs[0] || null;
     }
     
-    async findById(id: number): Promise<Song[]>{
+    async findById(id: number): Promise<Song[]|null>{
         const { rows:songs } = await connection.query(`
-            SELECT * FROM songs WHERE "id" = ($1)
+            SELECT * FROM songs WHERE id = ($1)
         `,[id]);
 
         return songs[0] || null;
@@ -46,7 +46,7 @@ export class PostgresSongsRepository implements ISongsRepository {
         );
     };
 
-    async downVote(id: number): Promise<Song[]>{
+    async downVote(id: number): Promise<Song[]|null>{
         
         const result = await connection.query(`
             UPDATE songs 
@@ -58,19 +58,29 @@ export class PostgresSongsRepository implements ISongsRepository {
         return result.rows || null; 
     };
 
-    async fetchAboveScore10(): Promise<Song[]> {
+    async fetchAboveScore10(): Promise<Song[]|null> {
         const { rows } = await connection.query(`
-            SELECT * FROM songs WHERE "score" > 10
+            SELECT * FROM songs WHERE score > 10
         `);
         
         return rows || null;
     }
 
-    async fetchBelowScore10(): Promise<Song[]> {
+    async fetchBelowScore10(): Promise<Song[]|null> {
         const { rows } = await connection.query(`
-            SELECT * FROM songs WHERE "score" <= 10
+            SELECT * FROM songs WHERE score <= 10
         `);
 
+        return rows || null;
+    }
+
+    async fetchTopSongs(amount:number):Promise<Song[]|null> {
+        const { rows } = await connection.query(`
+            SELECT * FROM songs 
+            ORDER BY score DESC 
+            LIMIT $1
+        `,[amount]);
+        
         return rows || null;
     }
 };
