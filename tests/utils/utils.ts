@@ -1,5 +1,6 @@
 import "../../src/setup";
 import { connection } from "../../src/database";
+
 async function clearDatabase() {
     await connection.query('DELETE FROM songs');
     await connection.query('DELETE FROM genres');
@@ -7,6 +8,9 @@ async function clearDatabase() {
 }
 async function clearSongs() {
     await connection.query('DELETE FROM songs');
+}
+async function clearGenres() {
+    await connection.query('DELETE FROM genres');
 }
 
 async function endConnection() {
@@ -21,4 +25,10 @@ async function fetchSongById(id: number) {
     return songs[0] || null;
 };
 
-export { fetchSongById, endConnection, clearDatabase, clearSongs };
+export { 
+    fetchSongById, 
+    endConnection, 
+    clearDatabase, 
+    clearSongs, 
+    clearGenres
+};
