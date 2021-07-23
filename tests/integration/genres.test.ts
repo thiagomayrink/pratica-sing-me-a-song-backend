@@ -1,8 +1,7 @@
 import "../../src/setup";
 import supertest from "supertest";
 import { app } from "../../src/app";
-import {  fetchSongById, endConnection, clearSongs, clearGenres } from "../utils/utils";
-import { createAndReturnSong, populateSongsTable } from "../factories/songFactory";
+import { endConnection, clearGenres } from "../utils/utils";
 import { createAndReturnGenre, populateGenresTable } from "../factories/genreFactory";
 
 beforeEach(async () => {
